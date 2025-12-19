@@ -107,7 +107,7 @@ pip install django djangorestframework djangorestframework-simplejwt django-cors
 
 ```
 
-*(Alternatively, if you have a `requirements.txt` file, run `pip install -r requirements.txt`)*
+*(Alternatively,  `requirements.txt` file, run `pip install -r requirements.txt`)*
 
 ### Step 4: Database Setup
 
