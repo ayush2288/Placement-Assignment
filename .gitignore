@@ -1,0 +1,17 @@
+# Frontend
+node_modules/
+frontend/node_modules/
+npm-debug.log*
+
+# Backend
+identity_service/venv/
+identity_service/__pycache__/
+identity_service/db.sqlite3
+identity_service/.env
+
+# Python
+__pycache__/
+*.pyc
+
+# Environment
+.env

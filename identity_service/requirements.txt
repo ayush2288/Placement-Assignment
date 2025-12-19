@@ -1,0 +1,10 @@
+
+Django==4.2.7
+djangorestframework==3.14.0
+djangorestframework-simplejwt==5.3.0
+cryptography==41.0.7
+django-cors-headers==4.3.1
+python-dotenv==1.0.0
+
+abc12@gmail.com
+Ayushshah$$88
