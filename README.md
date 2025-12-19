@@ -3,6 +3,7 @@
 This project handles **user authentication** and the **protection of sensitive personal data**. The core challenge was to build a system where sensitive fields (**specifically the Aadhaar/ID Number**) are **never stored in plain text** but are **securely encrypted at rest** and **only decrypted when requested by an authenticated user**.
 
 ---
+
 ## Technologies Used
 
 - **Backend:** Django, Django Rest Framework, SimpleJWT, Cryptography
@@ -10,7 +11,7 @@ This project handles **user authentication** and the **protection of sensitive p
 - **Database:** SQLite
 - **Security:** AES-256 Encryption, JWT Authentication
 
---- 
+---
 
 ## Implementation Approach & Core Logic
 
@@ -18,20 +19,20 @@ This project handles **user authentication** and the **protection of sensitive p
 
 #### User Existence & Validation Logic
 
-**Uniqueness Checks:**
+**Uniqueness Checks:**  
 The `User` model enforces `unique=True` on the **email** field. During registration, the `RegisterSerializer` automatically checks if the provided **username or email** already exists in the database. If a conflict is found, it raises a **validation error immediately**, preventing duplicate accounts.
 
-**Password Validation:**
+**Password Validation:**  
 Enforces a **minimum password length of 8 characters** and checks that the **"Password"** and **"Confirm Password"** fields **match**.
 
 ![Screenshot 2025-12-19 131215](https://github.com/user-attachments/assets/5196be94-2ee2-48e1-bf1f-e7ca237c1382)
 
 #### Security & Encryption Engine
 
-**AES-256 Encryption:**
+**AES-256 Encryption:**  
 Implemented a custom `EncryptionHelper` class using the **cryptography** library. It generates a **random 16-byte Initialization Vector (IV)** for every encryption operation to ensure that the same Aadhaar number results in **different ciphertext every time** (protecting against **frequency analysis attacks**).
 
-**Secure Storage:**
+**Secure Storage:**  
 The Aadhaar number is received as **plain text**, **encrypted in memory**, and only the **Base64-encoded ciphertext** is saved to the **SQLite database**. The **plain text is never stored**.
 
 ![Screenshot 2025-12-19 131607](https://github.com/user-attachments/assets/4f9afc30-e752-4ce0-b9fd-a8deb1ff5a4e)
@@ -40,7 +41,7 @@ The Aadhaar number is received as **plain text**, **encrypted in memory**, and o
 
 Implemented **stateless authentication** using **JWT (JSON Web Tokens)**.
 
-**Login Logic:**
+**Login Logic:**  
 The system accepts an **email and password**, validates them against the **hashed password** in the database, and issues an **access token (short-lived)** and a **refresh token (long-lived)**.
 
 ![Screenshot 2025-12-19 131333](https://github.com/user-attachments/assets/bc8c533f-0cf1-412a-8e5b-33e9debf9649)
@@ -204,29 +205,43 @@ npm run dev
 
 ---
 
-### Diagram Explanation
+## Diagram Explanation
 
 This Entity-Relationship (ER) diagram visualizes how the system links user profiles with security tokens.
 
 <img width="1433" height="777" alt="image" src="https://github.com/user-attachments/assets/8166f366-b0b3-4bf8-b965-57e39769a835" />
 
-
-1. **Users Table (Yellow):**
+**1. Users Table (Yellow):**  
 This is the core table storing user identity.
-* **Key Field:** `encrypted_aadhaar`. This field is highlighted because it stores the **ciphertext** (scrambled text) rather than the actual 12-digit number, ensuring security at rest.
-* **Role:** Acts as the parent table that all other data is linked to.
+- **Key Field:** `encrypted_aadhaar`. This field is highlighted because it stores the **ciphertext** (scrambled text) rather than the actual 12-digit number, ensuring security at rest.
+- **Role:** Acts as the parent table that all other data is linked to.
 
-
-2. **Outstanding Tokens (Blue):**
+**2. Outstanding Tokens (Blue):**  
 This table manages **Active Sessions**.
-* **Relationship:** The line connecting it to `users` indicates a **One-to-Many** relationship. This means **one user** can have **multiple active tokens** (e.g., logged in on both a phone and a laptop at the same time).
-* **Function:** It tracks every valid JWT token currently in circulation.
+- **Relationship:** The line connecting it to `users` indicates a **One-to-Many** relationship. This means **one user** can have **multiple active tokens** (e.g., logged in on both a phone and a laptop at the same time).
+- **Function:** It tracks every valid JWT token currently in circulation.
 
-
-3. **Blacklisted Tokens (Red):**
+**3. Blacklisted Tokens (Red):**  
 This table manages **Secure Logout**.
-* **Relationship:** It is linked directly to `outstanding_tokens`.
-* **Function:** When a user clicks "Logout," their specific token ID is added here. The backend checks this table before every request; if a token appears here, access is denied immediately.
+- **Relationship:** It is linked directly to `outstanding_tokens`.
+- **Function:** When a user clicks "Logout," their specific token ID is added here. The backend checks this table before every request; if a token appears here, access is denied immediately.
+
+---
+
+## AI Tool Usage & Documentation
+
+| AI-Assisted Tasks | Effectiveness Score |
+|-------------------|---------------------|
+| **Project Initialization (Boilerplate):** Helped set up the starting code for both the Django backend and the React frontend, saving time on basic folder structure creation. | **Score 5:** Very effective. It gave me a working "Hello World" setup instantly so I could start coding the actual logic immediately. |
+| **Connecting Frontend & Backend:** Wrote the `axios.js` code to let the React frontend talk to the Django backend APIs using JSON data. | **Score 5:** Perfect. It solved the "CORS" errors and ensured the frontend could send login data to the server correctly. |
+| **Designing the UI & Animations:** Generated the CSS and React logic for the "Sliding Overlay" animation that smoothly switches between Login and Sign Up screens. | **Score 4:** Great result. It made the app look professional and modern without me needing to write hundreds of lines of complex CSS manually. |
+| **Diagnosing Python Version Crash:** Identified that the Django Admin panel was crashing because I was using Python 3.14 (experimental). | **Score 5:** Lifesaver. I would have been stuck for hours trying to fix "AttributeError" without knowing it was just a version mismatch. |
+| **Fixing "Broken User" Login:** Explained why my manual database entries weren't working (passwords weren't hashed) and wrote a script to fix them. | **Score 5:** Very helpful. It taught me how Django securely stores passwords and fixed my login errors. |
+| **Refactoring Auth Components:** Helped combine two separate pages (Login and Register) into one single `Auth.jsx` component to make the sliding animation work. | **Score 4:** Good help. I had to fix a few import paths myself, but the logic for merging the two forms was correct. |
+| **Creating Test Data:** Guided me on how to register new users properly through the API so I could test if the encryption was working. | **Score 4:** Useful. It ensured I had valid data to show in my final screenshots. |
+| **Professional GitHub README:** Assisted in writing and formatting a professional `README.md` file, including setup instructions, API documentation, and project descriptions. | **Score 5:** Excellent. It made the project documentation look high-quality and complete, saving me a lot of time on writing and formatting. |
+
+---
 
 ## License
 
