@@ -13,6 +13,10 @@ This project handles **user authentication** and the **protection of sensitive p
 
 ---
 
+## Video 
+https://drive.google.com/file/d/1SPjYK1SmsURS88T6vRh0E6EzuisB8cSO/view?usp=sharing
+
+---
 ## Implementation Approach & Core Logic
 
 ### 1. Backend Architecture (Django Rest Framework)
