@@ -56,8 +56,139 @@ This project handles **user authentication** and the **protection of sensitive p
 
 
 ---
+Setup & Run Instructions
+
+Follow these step-by-step instructions to set up the project locally.
+
+## Prerequisites
+* **Node.js** (v16 or higher)
+* **Python** (v3.10, v3.11, or v3.12)  
+  *> **Note:** Python 3.14 is experimental and not supported by Django yet.*
+
+---
+
+## 1. Backend Setup (Django)
+
+The backend handles authentication, encryption, and database management.
+
+### Step 1: Navigate to the backend directory
+Open your terminal and move to the server folder:
+```bash
+cd identity_service
+
+```
+
+### Step 2: Create and Activate a Virtual Environment
+
+It is recommended to run the backend in an isolated environment.
+
+**Windows:**
+
+```bash
+python -m venv venv
+.\venv\Scripts\activate
+
+```
+
+**Mac/Linux:**
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+
+```
+
+### Step 3: Install Dependencies
+
+Install the required Python packages including Django, DRF, and Cryptography.
+
+```bash
+pip install django djangorestframework djangorestframework-simplejwt django-cors-headers cryptography
+
+```
+
+*(Alternatively, if you have a `requirements.txt` file, run `pip install -r requirements.txt`)*
+
+### Step 4: Database Setup
+
+Initialize the SQLite database and create the necessary tables.
+
+```bash
+python manage.py migrate
+
+```
+
+### Step 5: Run the Server
+
+Start the Django development server.
+
+```bash
+thon manage.py makemigrations
+python manage.py runserver
+
+```
+
+> The backend will start at: **http://127.0.0.1:8000/**
+
+---
+
+## 2. Frontend Setup (React + Vite)
+
+The frontend provides the user interface for Login, Registration, and the Secure Dashboard.
+
+### Step 1: Navigate to the frontend directory
+
+Open a **new terminal window** (keep the backend running) and move to the client folder:
+
+```bash
+cd frontend
+
+```
+
+### Step 2: Install Node Modules
+
+Download the necessary JavaScript libraries (React, Axios, etc.).
+
+```bash
+npm install
+
+```
+
+### Step 3: Start the Development Server
+
+Run the Vite server.
+
+```bash
+npm run dev
+
+```
+
+> The frontend will start at: **http://localhost:5173**
+
+---
+
+## 3. How to Use the Application
+
+1. **Open the App:** Go to [http://localhost:5173] in your browser.
+2. **Register:** Click "Sign Up" to create a new account.
+* *Note:* The **Aadhaar Number** you enter here will be encrypted before saving.
 
 
+3. **Login:** Use your registered Email and Password to log in.
+4. **View Dashboard:** Upon successful login, you will see your profile.
+* The **Aadhaar Number** displayed here is decrypted in real-time by the backend.
+
+
+5. **Verify Encryption (Admin Panel):**
+* Go to [http://127.0.0.1:8000/admin](https://www.google.com/search?q=http://127.0.0.1:8000/admin)
+* Log in (You may need to create a superuser first using `python manage.py createsuperuser`).
+* Inspect the `Users` table to see that the Aadhaar field is stored as **Encrypted Text** (gibberish), not plain text.
+
+
+
+```
+
+```
 
 
 
