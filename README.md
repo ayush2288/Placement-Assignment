@@ -204,7 +204,28 @@ npm run dev
 
 ---
 
+### Diagram Explanation
 
+This Entity-Relationship (ER) diagram visualizes how the system links user profiles with security tokens.
+
+<img width="1422" height="779" alt="image" src="https://github.com/user-attachments/assets/c81c41a3-8f37-4e47-b2d9-89049ef728bb" />
+
+1. **Users Table (Yellow):**
+This is the core table storing user identity.
+* **Key Field:** `encrypted_aadhaar`. This field is highlighted because it stores the **ciphertext** (scrambled text) rather than the actual 12-digit number, ensuring security at rest.
+* **Role:** Acts as the parent table that all other data is linked to.
+
+
+2. **Outstanding Tokens (Blue):**
+This table manages **Active Sessions**.
+* **Relationship:** The line connecting it to `users` indicates a **One-to-Many** relationship. This means **one user** can have **multiple active tokens** (e.g., logged in on both a phone and a laptop at the same time).
+* **Function:** It tracks every valid JWT token currently in circulation.
+
+
+3. **Blacklisted Tokens (Red):**
+This table manages **Secure Logout**.
+* **Relationship:** It is linked directly to `outstanding_tokens`.
+* **Function:** When a user clicks "Logout," their specific token ID is added here. The backend checks this table before every request; if a token appears here, access is denied immediately.
 
 ## License
 
