@@ -208,7 +208,8 @@ npm run dev
 
 This Entity-Relationship (ER) diagram visualizes how the system links user profiles with security tokens.
 
-<img width="1422" height="779" alt="image" src="https://github.com/user-attachments/assets/c81c41a3-8f37-4e47-b2d9-89049ef728bb" />
+<img width="1433" height="777" alt="image" src="https://github.com/user-attachments/assets/8166f366-b0b3-4bf8-b965-57e39769a835" />
+
 
 1. **Users Table (Yellow):**
 This is the core table storing user identity.
