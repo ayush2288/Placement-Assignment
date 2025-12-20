@@ -120,13 +120,14 @@ Install the required Python packages including Django, DRF, and Cryptography.
 pip install django djangorestframework djangorestframework-simplejwt django-cors-headers cryptography
 ```
 
-*(Alternatively, if you have a `requirements.txt` file, run `pip install -r requirements.txt`)*
+*(Alternatively,`requirements.txt` file, run `pip install -r requirements.txt`)*
 
 #### Step 4: Database Setup
 
 Initialize the SQLite database and create the necessary tables.
 
 ```bash
+python manage.py makemigrations 
 python manage.py migrate
 ```
 
@@ -135,7 +136,6 @@ python manage.py migrate
 Start the Django development server.
 
 ```bash
-python manage.py makemigrations
 python manage.py runserver
 ```
 
@@ -186,11 +186,6 @@ npm run dev
 
 4. **View Dashboard:** Upon successful login, you will see your profile.
    - The **Aadhaar Number** displayed here is decrypted in real-time by the backend.
-
-5. **Verify Encryption (Admin Panel):**
-   - Go to http://127.0.0.1:8000/admin
-   - Log in (You may need to create a superuser first using `python manage.py createsuperuser`).
-   - Inspect the `Users` table to see that the Aadhaar field is stored as **Encrypted Text** (gibberish), not plain text.
 
 ---
 
